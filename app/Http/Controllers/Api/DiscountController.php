@@ -63,7 +63,7 @@ class DiscountController extends Controller
      */
     public function show(int $id): JsonResponse
     {
-        $discount = Discount::find($id);
+        $discount = Discount::with("product")->find($id);
 
         if ($discount) {
             return response()
