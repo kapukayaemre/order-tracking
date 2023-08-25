@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthorController;
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,8 +22,16 @@ use Illuminate\Support\Facades\Route;
 });*/
 
 Route::group(["middleware" => "auth:sanctum"], function () {
+    /*** Author Routes */
     Route::apiResource("authors", AuthorController::class);
+
+    /*** Category Routes */
+    Route::apiResource("categories", CategoryController::class);
+
+    /*** Discount Routes */
+    Route::apiResource("discounts", CategoryController::class);
 });
 
+/*** Auth Login */
 Route::post('login', [LoginController::class, "login"])->name("login");
 

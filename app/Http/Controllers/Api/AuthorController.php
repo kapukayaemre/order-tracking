@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthorStoreRequest;
+use App\Http\Requests\AuthorUpdateRequest;
 use App\Models\Author;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -74,18 +75,20 @@ class AuthorController extends Controller
             ->json([
                 "status"  => "fail",
                 "message" => "Yazar Bulunamadı!"
-            ]);
+            ])
+            ->setStatusCode(400);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(AuthorUpdateRequest $request, int $id): JsonResponse
     {
+        $author = Author::find($id);
 
         $updateAuthor = Author::where("id", $id)->update([
             "name"   => $request->input("name"),
-            "status" => $request->input("status")
+            "status" => $request->input("status") ?? $author->status
         ]);
 
         $updatedAuthor = Author::find($id);
