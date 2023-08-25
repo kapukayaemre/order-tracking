@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthorController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\DiscountController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,7 +30,7 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     Route::apiResource("categories", CategoryController::class);
 
     /*** Discount Routes */
-    Route::apiResource("discounts", CategoryController::class);
+    Route::apiResource("discounts", DiscountController::class);
 });
 
 /*** Auth Login */
