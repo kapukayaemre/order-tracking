@@ -16,7 +16,11 @@ class DiscountController extends Controller
      */
     public function index(): JsonResponse
     {
-        $discounts = Discount::query()->where("status", "active")->get();
+        $discounts = Discount::query()
+            ->where("status", "active")
+            ->with("product")
+            ->get();
+
         return response()
             ->json([
                 "status"    => "success",
