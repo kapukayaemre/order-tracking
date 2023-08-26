@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Discount;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
@@ -36,10 +37,7 @@ class OrderController extends Controller
     public function store(Request $request): JsonResponse
     {
         /*** Check Stock */
-        $productStock = Product::find($request
-            ->input("product_id"))
-            ->select(["id", "stock_quantity"])
-            ->first();
+        $productStock = Product::find($request->input("product_id"));
 
         if ($productStock->stock_quantity <= 0) {
             /*** Product Status Set to Passive*/
@@ -55,6 +53,7 @@ class OrderController extends Controller
                 ->setStatusCode(404);
         }
 
+        /*** Stock Difference with Request */
         if ($productStock->stock_quantity < $request->input("quantity")) {
 
             $unavailableQuantity = $request->input("quantity") - $productStock->stock_quantity;
@@ -63,12 +62,34 @@ class OrderController extends Controller
                 ->json([
                     "status"        => "fail",
                     "message"       => "Belirttiğiniz miktarda stok bulunmamaktadır!",
-                    "available"     => "Mevcut Stok ".$productStock,
+                    "available"     => "Mevcut Stok ".$productStock->stock_quantity,
                     "request"       => $request->input("quantity"),
-                    "unavailable"   => "Talep Edilen Fark ".$unavailableQuantity
+                    "unavailable"   => "Talep Edilen ile Stok Farkı ".$unavailableQuantity
                 ])
-                ->setStatusCode(400);
+                ->setStatusCode(404);
         }
+
+        /*** Discounts */
+        $discounts = Discount::where("status", "active")->get();
+
+        /*** Highest Discount Rate */
+        $discountRate = '';
+        $discountCount = '';
+        foreach ($discounts as $discount) {
+            /*** Get max discount rate for amount */
+            if ($request->input("amount") > $discount->min_amount) {
+                $discountRate = $discount->discount_rate;
+            }
+
+            /*if ($request->input("quantity") > $discount->min_buy_count) {
+
+            }*/
+
+        }
+
+
+        dd($discountRate);
+
 
         $insertOrder = Order::query()->create([
             "user_id"       => $request->input("user_id"),

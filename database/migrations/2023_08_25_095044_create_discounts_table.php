@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId("product_id")->nullable()->constrained()->cascadeOnDelete();
             $table->foreignId("author_id")->nullable()->constrained()->cascadeOnDelete();
             $table->foreignId("category_id")->nullable()->constrained()->cascadeOnDelete();
+            $table->string("title");
             $table->double("min_amount", 8, 2)->nullable();
             $table->integer("discount_rate")->nullable();
             $table->integer("min_buy_count")->nullable();

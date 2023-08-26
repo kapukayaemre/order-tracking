@@ -15,6 +15,7 @@ class Discount extends Model
         "product_id",
         "author_id",
         "category_id",
+        "title",
         "min_amount",
         "discount_rate",
         "min_buy_count",

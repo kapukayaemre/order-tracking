@@ -44,6 +44,7 @@ class DiscountController extends Controller
             "product_id"    => $product->id ?? null,
             "author_id"     => $request->input("author_id") ?? $product->author_id ?? null,
             "category_id"   => $request->input("category_id") ?? $product->category_id ?? null,
+            "title"         => $request->input("title"),
             "min_amount"    => $request->input("min_amount"),
             "discount_rate" => $request->input("discount_rate"),
             "min_buy_count" => $request->input("min_buy_count"),
@@ -73,7 +74,7 @@ class DiscountController extends Controller
      */
     public function show(int $id): JsonResponse
     {
-        $discount = Discount::with(["product","category","author"])->find($id);
+        $discount = Discount::with(["product", "category", "author"])->find($id);
 
         if ($discount) {
             return response()
@@ -104,6 +105,7 @@ class DiscountController extends Controller
             "product_id"    => $discount->product_id ?? null,
             "author_id"     => $request->input("author_id") ?? $discount->author_id ?? null,
             "category_id"   => $request->input("category_id") ?? $discount->category_id ?? null,
+            "title"         => $request->input("title"),
             "min_amount"    => $request->input("min_amount"),
             "discount_rate" => $request->input("discount_rate"),
             "min_buy_count" => $request->input("min_buy_count"),

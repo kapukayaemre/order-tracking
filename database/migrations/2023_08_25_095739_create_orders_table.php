@@ -19,10 +19,10 @@ return new class extends Migration {
             $table->bigInteger("quantity");
             $table->integer("free_product_quantity")->nullable();
             $table->text("free_product_list")->nullable();
-            $table->double("discount_difference", 8, 2);
+            $table->double("discount_difference", 8, 2)->nullable();
             $table->double("amount", 8, 2);
             $table->double("free_product_list_amount", 8, 2)->nullable();
-            $table->double("shipping_price")->default(75.00);
+            $table->double("shipping_price")->nullable()->default(75.00);
             $table->text("description")->nullable();
             $table->enum("status", ["active", "passive"])->default("active");
             $table->timestamps();
