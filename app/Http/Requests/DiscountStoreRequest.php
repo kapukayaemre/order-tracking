@@ -22,19 +22,27 @@ class DiscountStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "product_id"    => ["required", "integer"],
-            "discount_rate" => ["required", "integer", "max:100"]
+            "product_id"    => ["nullable", "integer"],
+            "author_id"     => ["nullable", "integer"],
+            "category_id"   => ["nullable", "integer"],
+            "min_amount"    => ["nullable", "numeric"],
+            "discount_rate" => ["nullable", "integer", "max:100"],
+            "min_buy_count" => ["nullable", "integer"],
+            "free_count"    => ["nullable", "integer"]
         ];
     }
 
     public function messages(): array
     {
         return [
-            "product_id.required"    => "Bir Ürün Seçilmesi Zorunludur",
-            "product_id.integer"     => "Geçersiz Formatta Ürün",
-            "discount_rate.required" => "İndirim Oranı Girilmesi Zorunludur",
-            "discount_rate.integer"  => "Geçersiz Formatta İndirim Oranı",
-            "discount_rate.max"      => "İndirim Oranı 100'den Fazla Olamaz"
+            "product_id.integer"    => "Geçersiz Formatta Ürün",
+            "author_id.integer"     => "Geçersiz Formatta Yazar",
+            "category_id.integer"   => "Geçersiz Formatta Kategori",
+            "min_amount.numeric"    => "Sayısal Formatta Ödeme Giriniz",
+            "discount_rate.integer" => "Sayısal Formatta İndirim Oranı Giriniz",
+            "discount_rate.max"     => "İndirim Oranı 100'den Fazla Olamaz",
+            "min_buy_count.integer" => "Sayısal Formatta Minimum Satın Alma Sayısı Giriniz",
+            "free_count.integer"    => "Sayısal Formatta Ücretsiz Kitap Sayısı Giriniz",
         ];
     }
 }

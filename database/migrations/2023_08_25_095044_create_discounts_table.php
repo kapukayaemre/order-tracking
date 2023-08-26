@@ -13,8 +13,13 @@ return new class extends Migration
     {
         Schema::create('discounts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("product_id")->constrained()->cascadeOnDelete();
-            $table->integer("discount_rate");
+            $table->foreignId("product_id")->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId("author_id")->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId("category_id")->nullable()->constrained()->cascadeOnDelete();
+            $table->double("min_amount", 8, 2)->nullable();
+            $table->integer("discount_rate")->nullable();
+            $table->integer("min_buy_count")->nullable();
+            $table->integer("free_count")->nullable();
             $table->enum("status", ["active", "passive"])->default("active");
             $table->timestamps();
         });
