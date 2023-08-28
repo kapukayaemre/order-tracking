@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class OrderController extends Controller
@@ -36,91 +37,115 @@ class OrderController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        /*** Check Stock */
-        $productStock = Product::find($request->input("product_id"));
+        $orders = $request->input("orders");
 
-        if ($productStock->stock_quantity <= 0) {
-            /*** Product Status Set to Passive*/
-            $updateProduct = Product::where("id", $productStock->id)->update([
-                "status" => "passive"
-            ]);
+        foreach ($orders as $order) {
+            /*** Get product */
+            $product = Product::findOrFail($order["product_id"]);
 
-            return response()
-                ->json([
-                    "status"  => "fail",
+            /*** Check Stock */
+            if ($product->stock_quantity <= 0) {
+                Product::where("id", $product->id)->update([
+                    "status" => "passive"
+                ]);
+
+                return response()->json([
+                    "status" => "fail",
                     "message" => "İlgili Ürün Stok Tükenmiştir!"
-                ])
-                ->setStatusCode(404);
-        }
-
-        /*** Stock Difference with Request */
-        if ($productStock->stock_quantity < $request->input("quantity")) {
-
-            $unavailableQuantity = $request->input("quantity") - $productStock->stock_quantity;
-
-            return response()
-                ->json([
-                    "status"        => "fail",
-                    "message"       => "Belirttiğiniz miktarda stok bulunmamaktadır!",
-                    "available"     => "Mevcut Stok ".$productStock->stock_quantity,
-                    "request"       => $request->input("quantity"),
-                    "unavailable"   => "Talep Edilen ile Stok Farkı ".$unavailableQuantity
-                ])
-                ->setStatusCode(404);
-        }
-
-        /*** Discounts */
-        $discounts = Discount::where("status", "active")->get();
-
-        /*** Highest Discount Rate */
-        $discountRate = '';
-        $discountCount = '';
-        foreach ($discounts as $discount) {
-            /*** Get max discount rate for amount */
-            if ($request->input("amount") > $discount->min_amount) {
-                $discountRate = $discount->discount_rate;
+                ])->setStatusCode(404);
             }
 
-            /*if ($request->input("quantity") > $discount->min_buy_count) {
+            /*** Check requested product and current stock difference */
+            if ($product->stock_quantity < $order["quantity"]) {
 
-            }*/
+                return response()->json([
+                    "status" => "fail",
+                    "message" => "Belirttiğiniz miktarda stok bulunmamaktadır!",
+                    "available" => "Mevcut Stok " . $product->stock_quantity,
+                    "request" => $order["quantity"],
+                    "unavailable" => "Talep Edilen ile Stok Farkı " . ($order["quantity"] - $product->stock_quantity),
+                    "product" => $product,
+                ])->setStatusCode(404);
+            }
 
+            /*** Check discounts */
+            $discounts = Discount::where("status", "active")->get();
+
+            /*** Discounts */
+            $maxDiscountRate = 0;
+            $possibleFreeProduct = [];
+
+            foreach ($discounts as $discount) {
+                /*** Get the highest discount */
+                if ($order["total_amount"] >= $discount->min_amount) {
+                    $maxDiscountRate = max($maxDiscountRate, $discount->discount_rate);
+                }
+
+                /*** Check for possible free product */
+                if ($order["author_id"] === $discount->author_id && $order["category_id"] === $discount->category_id && $order["quantity"] >= $discount->min_buy_count) {
+                    $possibleFreeProduct[] = [
+                        "product_id" => $order["product_id"],
+                        "total_amount" => $order["total_amount"]
+                    ];
+                }
+            }
+
+            /*** If customer get free product then select most cheapest product */
+            if (!empty($possibleFreeProduct)) {
+                $cheapestProduct = min($possibleFreeProduct, function ($productA, $productB) {
+                    return $productA["total_amount"] - $productB["total_amount"];
+                });
+
+                $freeProductId = $cheapestProduct[0]["product_id"];
+            } else {
+                $freeProductId = null;
+            }
+
+            /*** Total amount */
+            $totalAmount = ($order["quantity"] * $product->price);
+
+            /*** Shipping price */
+            $shippingPrice = ($totalAmount >= 200) ? 0 : 75;
+
+            /*** Discount amount */
+            $discountAmount = $totalAmount * ($maxDiscountRate / 100);
+
+            /*** Discounted amount */
+            $discountedAmount = $totalAmount - $discountAmount;
+
+            // Siparişi kaydet
+            $order = Order::create([
+                "user_id" => Auth::user()->id,
+                "product_id" => $product->id,
+                "discount_id" => ($maxDiscountRate > 0) ? $discount->id : null,
+                "order_code" => "TT-" . Str::uuid()->toString(),
+                "quantity" => $order["quantity"],
+                "total_amount" => $totalAmount,
+                "shipping_price" => $shippingPrice,
+                "free_product" => $freeProductId,
+                "discount" => ($maxDiscountRate > 0) ? $maxDiscountRate : null,
+                "description" => $order["description"] ?? null,
+                "status" => "active"
+            ]);
+
+            // Stok miktarını güncelle
+            $product->stock_quantity -= $order["quantity"];
+
+            if ($product->stock_quantity <= 0) {
+                Product::where("id", $product->id)->update([
+                    "status" => "passive"
+                ]);
+            }
+
+            $product->save();
         }
 
-
-        dd($discountRate);
-
-
-        $insertOrder = Order::query()->create([
-            "user_id"       => $request->input("user_id"),
-            "product_id"    => $request->input("product_id"),
-            "discount_rate" => $request->input("discount_rate"),
-            "order_code"    => "TT-" . Str::uuid()->toString(),
-            "quantity"      => $request->input("quantity"),
-            "amount"        => $request->input("amount"),
-            "description"   => $request->input("description")
-        ]);
-
-        if ($insertOrder) {
-
-            /*** Decrease Stock Quantity */
-
-            return response()
-                ->json([
-                    "status"  => "success",
-                    "message" => "Sipariş Başarıyla Kayıt Edildi",
-                    "order"   => $insertOrder
-                ])
-                ->setStatusCode(201);
-        }
-
-        return response()
-            ->json([
-                "status"  => "fail",
-                "message" => "Sipariş Kayıt İşlemi Başarısız Sonuçlandı!"
-            ])
-            ->setStatusCode(400);
+        return response()->json([
+            "status" => "success",
+            "message" => "Sipariş Başarıyla Kayıt Edildi"
+        ])->setStatusCode(201);
     }
+
 
     /**
      * Display the specified resource.

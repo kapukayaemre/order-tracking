@@ -17,12 +17,10 @@ class Order extends Model
         "discount_id",
         "order_code",
         "quantity",
-        "free_product_quantity",
-        "free_product_list",
-        "discount_difference",
-        "amount",
-        "free_product_list_amount",
+        "total_amount",
         "shipping_price",
+        "free_product",
+        "discount",
         "description",
         "status"
     ];
