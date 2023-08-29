@@ -12,16 +12,14 @@ return new class extends Migration {
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('product_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('discount_id')->nullable()->constrained()->cascadeOnDelete();
-            $table->string('order_code');
-            $table->bigInteger('quantity');
-            $table->double('total_amount', 8, 2);
-            $table->double('shipping_price')->nullable()->default(75.00);
-            $table->unsignedBigInteger('free_product')->nullable();
-            $table->double('discount', 8, 2)->nullable();
-            $table->text('description')->nullable();
+            $table->foreignId("user_id")->constrained()->cascadeOnDelete();
+            $table->string("order_code");
+            $table->bigInteger("product_count");
+            $table->double("discount_amount", 8, 2)->nullable();
+            $table->double("discounted_amount", 8, 2)->nullable();
+            $table->double("total_amount", 8, 2);
+            $table->double("shipping_price", 8, 2)->nullable();
+            $table->integer("discount_rate")->nullable();
             $table->enum('status', ['active', 'passive'])->default('active');
             $table->timestamps();
         });

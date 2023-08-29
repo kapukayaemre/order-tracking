@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthorController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\DiscountController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\OrderDetailController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Http\Request;
@@ -39,6 +40,9 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 
     /*** Order Routes */
     Route::apiResource("orders", OrderController::class);
+
+    /*** Order Details Routes */
+    Route::apiResource("order-details", OrderDetailController::class);
 });
 
 /*** Auth Login */

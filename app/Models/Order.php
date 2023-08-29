@@ -13,15 +13,13 @@ class Order extends Model
 
     protected $fillable = [
         "user_id",
-        "product_id",
-        "discount_id",
         "order_code",
-        "quantity",
+        "product_count",
+        "discount_amount",
+        "discounted_amount",
         "total_amount",
         "shipping_price",
-        "free_product",
-        "discount",
-        "description",
+        "discount_rate",
         "status"
     ];
 
@@ -30,13 +28,9 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function product(): HasMany
+    public function orderDetails(): HasMany
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(OrderDetail::class);
     }
 
-    public function discount(): BelongsTo
-    {
-        return $this->belongsTo(Discount::class);
-    }
 }
