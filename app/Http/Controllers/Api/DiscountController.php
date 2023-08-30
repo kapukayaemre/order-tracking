@@ -9,6 +9,7 @@ use App\Models\Discount;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class DiscountController extends Controller
 {
@@ -17,10 +18,13 @@ class DiscountController extends Controller
      */
     public function index(): JsonResponse
     {
-        $discounts = Discount::query()
-            ->where("status", "active")
-            ->with(["product", "author", "category"])
-            ->get();
+        /*** Discounts cached for one minute */
+        $discounts = Cache::remember("discounts", 60, function () {
+           return Discount::query()
+               ->where("status", "active")
+               ->with(["product", "author", "category"])
+               ->get();
+        });
 
         return response()
             ->json([

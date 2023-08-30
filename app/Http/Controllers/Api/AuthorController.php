@@ -8,6 +8,7 @@ use App\Http\Requests\AuthorUpdateRequest;
 use App\Models\Author;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class AuthorController extends Controller
 {
@@ -16,7 +17,14 @@ class AuthorController extends Controller
      */
     public function index(): JsonResponse
     {
-        $authors = Author::query()->where("status", "active")->get();
+        /*** Authors cached for one minute */
+        $authors = Cache::remember("authors", 60, function () {
+            return Author::query()
+                ->where("status", "active")
+                ->with("product")
+                ->get();
+        });
+
         return response()
             ->json([
                 "status"  => "success",

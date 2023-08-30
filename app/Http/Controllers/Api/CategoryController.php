@@ -7,6 +7,7 @@ use App\Http\Requests\CategoryStoreRequest;
 use App\Http\Requests\CategoryUpdateRequest;
 use App\Models\Category;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Cache;
 
 class CategoryController extends Controller
 {
@@ -15,7 +16,14 @@ class CategoryController extends Controller
      */
     public function index(): JsonResponse
     {
-        $categories = Category::query()->where("status", "active")->get();
+        /*** Categories cached for one minute */
+        $categories = Cache::remember("categories", 60, function () {
+           return Category::query()
+               ->where("status", "active")
+               ->with("product")
+               ->get();
+        });
+
         return response()
             ->json([
                 "status"     => "success",

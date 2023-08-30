@@ -8,6 +8,7 @@ use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ProductController extends Controller
 {
@@ -16,11 +17,13 @@ class ProductController extends Controller
      */
     public function index(): JsonResponse
     {
-        $products = Product::query()
-            ->where("status", "active")
-            ->where("stock_quantity", ">", 0)
-            ->with(["category", "author"])
-            ->get();
+        $products = Cache::remember("products", 60, function () {
+           return Product::query()
+               ->where("status", "active")
+               ->where("stock_quantity", ">", 0)
+               ->with(["category", "author"])
+               ->get();
+        });
 
         return response()
             ->json([

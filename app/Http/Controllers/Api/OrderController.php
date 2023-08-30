@@ -12,6 +12,7 @@ use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class OrderController extends Controller
@@ -21,10 +22,13 @@ class OrderController extends Controller
      */
     public function index(): JsonResponse
     {
-        $orders = Order::query()
-            ->where("status", "active")
-            ->with(["user","orderDetails"])
-            ->get();
+        /*** Orders cached for one minute */
+        $orders = Cache::remember("orders", 60, function () {
+           return Order::query()
+               ->where("status", "active")
+               ->with(["user","orderDetails"])
+               ->get();
+        });
 
         return response()
             ->json([
