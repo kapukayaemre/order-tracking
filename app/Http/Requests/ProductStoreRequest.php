@@ -24,7 +24,7 @@ class ProductStoreRequest extends FormRequest
         return [
             "category_id"    => ["required", "integer"],
             "author_id"      => ["required", "integer"],
-            "discount_id"    => ["required", "integer"],
+            "discount_id"    => ["nullable", "integer"],
             "title"          => ["required", "max:255"],
             "description"    => ["nullable", "max:500"],
             "price"          => ["required", "numeric"],
@@ -39,7 +39,6 @@ class ProductStoreRequest extends FormRequest
             "category_id.integer"     => "Seçilen Kategori Formatı Uygun Değil",
             "author_id.required"      => "Yazar Seçimi Zorunludur",
             "author_id.integer"       => "Seçilen Yazar Formatı Uygun Değil",
-            "discount_id.required"    => "Kampanya Seçimi Zorunludur",
             "discount_id.integer"     => "Seçilen Kampanya Formatı Uygun Değil",
             "title.required"          => "Ürün Başlığı Zorunludur",
             "title.max"               => "Ürün Başlığı En Fazla 255 Karakter Olabilir",

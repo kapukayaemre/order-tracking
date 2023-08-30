@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\OrderStoreRequest;
+use App\Http\Requests\OrderUpdateRequest;
 use App\Models\Discount;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -36,7 +38,7 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): JsonResponse
+    public function store(OrderStoreRequest $request): JsonResponse
     {
         $orders = $request->input("orders");
 
@@ -227,7 +229,7 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(OrderUpdateRequest $request, int $id): JsonResponse
     {
         $order = Order::find($id);
 
