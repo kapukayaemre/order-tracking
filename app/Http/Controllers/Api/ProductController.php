@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
+use App\Jobs\StoreProduct;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -39,7 +40,7 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request): JsonResponse
     {
-        $insertProduct = Product::query()->create([
+        $productData = [
             "category_id"    => $request->input("category_id"),
             "author_id"      => $request->input("author_id"),
             "discount_id"    => $request->input("discount_id"),
@@ -47,24 +48,16 @@ class ProductController extends Controller
             "description"    => $request->input("description"),
             "price"          => $request->input("price"),
             "stock_quantity" => $request->input("stock_quantity")
-        ]);
+        ];
 
-        if ($insertProduct) {
-            return response()
-                ->json([
-                    "status"  => "success",
-                    "message" => "Ürün Başarıyla Kayıt Edildi",
-                    "product" => $insertProduct
-                ])
-                ->setStatusCode(201);
-        }
+        StoreProduct::dispatch($productData);
 
         return response()
             ->json([
-                "status"  => "fail",
-                "message" => "Ürün Kayıt İşlemi Başarısız Sonuçlandı!"
+                "status"  => "success",
+                "message" => "Ürün Kayıt İşlemi Kuyruğa Eklendi"
             ])
-            ->setStatusCode(400);
+            ->setStatusCode(202);
     }
 
     /**
