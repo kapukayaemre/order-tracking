@@ -1,0 +1,888 @@
+{
+	"info": {
+		"_postman_id": "b99da906-c5c7-4dd2-829d-2c7c8dbb7de1",
+		"name": "order-tracking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25678793"
+	},
+	"item": [
+		{
+			"name": "Author",
+			"item": [
+				{
+					"name": "Authors List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://order-tracking.test/api/authors",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Author",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"Test Author\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://order-tracking.test/api/authors",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Author Detail",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://order-tracking.test/api/authors/15",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"authors",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Author",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"Updated Author\",\n    \"status\" : \"passive\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://order-tracking.test/api/authors/15",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"authors",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Author",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://order-tracking.test/api/authors/15",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"authors",
+								"15"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Category List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://order-tracking.test/api/categories",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category Detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://order-tracking.test/api/categories/7",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"categories",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\" : \"Test Category\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://order-tracking.test/api/categories",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\" : \"Test Category Updated\",\n    \"status\": \"passive\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://order-tracking.test/api/categories/8",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"categories",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://order-tracking.test/api/categories/8",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"categories",
+								"8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Discount",
+			"item": [
+				{
+					"name": "Discount List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://order-tracking.test/api/discounts",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"discounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Discount Detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://order-tracking.test/api/discounts/1",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"discounts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Discount",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"author_id\": 3,\n    \"category_id\": 1,\n    \"title\": \"2 Alana 1 Bedava\",\n    \"min_buy_count\": 2,\n    \"free_count\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://order-tracking.test/api/discounts",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"discounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Discount",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"author_id\": 3,\n    \"category_id\": 1,\n    \"title\": \"2 Alana 1 Bedava\",\n    \"min_buy_count\": 2,\n    \"free_count\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://order-tracking.test/api/discounts/1",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"discounts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Discount",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://order-tracking.test/api/discounts/1",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"discounts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Product List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://order-tracking.test/api/products",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product Detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://order-tracking.test/api/products/1",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"category_id\": 1,\n    \"author_id\": 1,\n    \"title\": \"Test Product\",\n    \"description\": \"Test Description\",\n    \"price\": 40.44,\n    \"stock_quantity\": 30\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://order-tracking.test/api/products",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"category_id\": 2,\n    \"author_id\": 2,\n    \"title\": \"Test Product Updated\",\n    \"price\": 44.44,\n    \"stock_quantity\": 33,\n    \"status\": \"passive\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://order-tracking.test/api/products/17",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"products",
+								"17"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://order-tracking.test/api/products/17",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"products",
+								"17"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "Order List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://order-tracking.test/api/orders",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Order Detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://order-tracking.test/api/orders/1",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"orders\": [\n        {\n            \"user_id\": 1,\n            \"product_id\": 3,\n            \"author_id\": 3,\n            \"category_id\": 1,\n            \"quantity\": 4,\n            \"price\": 36.40,\n            \"address\": \"İstanbul, Türkiye\",\n            \"description\": \"Bu sipariş için özel bir açıklama\"\n        },\n        {\n            \"user_id\": 1,\n            \"product_id\": 11,\n            \"author_id\": 1,\n            \"category_id\": 1,\n            \"quantity\": 1,\n            \"price\": 10.40,\n            \"address\": \"Ankara, Türkiye\"\n        },\n        {\n            \"user_id\": 1,\n            \"product_id\": 8,\n            \"author_id\": 8,\n            \"category_id\": 4,\n            \"quantity\": 2,\n            \"price\": 79.20,\n            \"address\": \"İzmir, Türkiye\",\n            \"description\": \"Bu sipariş için özel bir açıklama\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://order-tracking.test/api/orders",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"updated_orders\": [\n        {\n            \"user_id\": 1,\n            \"product_id\": 3,\n            \"author_id\": 3,\n            \"category_id\": 1,\n            \"quantity\": 2,\n            \"price\": 18.20,\n            \"address\": \"İstanbul, Türkiye\",\n            \"description\": \"Bu sipariş için özel bir açıklama\"\n        },\n        {\n            \"user_id\": 1,\n            \"product_id\": 11,\n            \"author_id\": 1,\n            \"category_id\": 1,\n            \"quantity\": 1,\n            \"price\": 10.40,\n            \"address\": \"Ankara, Türkiye\"\n        },\n        {\n            \"user_id\": 1,\n            \"product_id\": 8,\n            \"author_id\": 8,\n            \"category_id\": 4,\n            \"quantity\": 3,\n            \"price\": 118.80,\n            \"address\": \"İzmir, Türkiye\",\n            \"description\": \"Bu sipariş için özel bir açıklama\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://order-tracking.test/api/orders/1",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Order",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://order-tracking.test/api/orders/1",
+							"protocol": "http",
+							"host": [
+								"order-tracking",
+								"test"
+							],
+							"path": [
+								"api",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "admin@admin.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://order-tracking.test/api/login",
+					"protocol": "http",
+					"host": [
+						"order-tracking",
+						"test"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "1|laravel_sanctum_MYf170IymEU21Y757adtefi5tOIsc4vVpokqAqRj118bc475",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
