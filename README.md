@@ -14,3 +14,6 @@ This is a restful API for book merchant order and stock tracking.
 on Postman then you have a ready request collection. <br/>
 - Don't forget to **login** on system and save the **token** on the parent collection. 
 
+## Queue and Cache
+- index pages datas cached for 60 seconds
+- product add process working with queue so after add products on queue `php artisan queue:work` command should start for save records.
